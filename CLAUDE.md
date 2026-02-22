@@ -32,10 +32,17 @@ src/
 - **Headless UI**: Used only for the dropdown (`OptionDropdown` uses `Listbox`). All other inputs use standard HTML elements.
 - **Styling**: Tailwind utility classes directly in JSX. Custom theme variables defined in `src/app/globals.css`. Fonts: Geist Sans/Mono.
 
+### API proxy routes
+
+External APIs that don't support CORS are proxied through Next.js API routes (`src/app/api/`) to avoid browser restrictions. The client calls our local route, which forwards the request server-side.
+
+- `src/app/api/analyze/route.ts` → proxies to `https://intelligenxe.org/api/chk/analyze/`
+
 ### API endpoints consumed
 
 - `GET /options` — fetches dropdown options (returns `ApiOption[]`)
-- `POST /strategist` — submits FormData with file, prompt, option, parameter_value (returns `StrategistResponse`)
+- `POST /strategist` — submits FormData with file, prompt, option, parameter_value (returns `StrategistResponse`) *(currently unused — will be wired up later)*
+- `POST /api/analyze` — proxied; sends PDF as FormData (`document` field) for analysis (returns `StrategistResponse`)
 
 ## Environment
 
