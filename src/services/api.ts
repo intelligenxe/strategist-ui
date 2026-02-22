@@ -28,3 +28,30 @@ export async function submitStrategistRequest(
   if (!res.ok) throw new Error("Request failed");
   return res.json();
 }
+
+const ANALYZE_URL = "https://intelligenxe.org/api/chk/analyze/";
+
+export async function submitAnalyzeRequest(
+  file: File
+): Promise<StrategistResponse> {
+  const formData = new FormData();
+  formData.append("document", file, file.name);
+
+  const res = await fetch(ANALYZE_URL, {
+    method: "POST",
+    body: formData,
+  });
+  if (!res.ok) throw new Error("Analysis request failed");
+
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const json = await res.json();
+    // Map to StrategistResponse shape — try common field names
+    const content =
+      json.content ?? json.result ?? json.data ?? JSON.stringify(json, null, 2);
+    return { content };
+  }
+
+  const text = await res.text();
+  return { content: text };
+}

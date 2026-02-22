@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ApiOption, StrategistResponse } from "@/types";
-import { fetchOptions, submitStrategistRequest } from "@/services/api";
+import { fetchOptions, submitAnalyzeRequest } from "@/services/api";
 
 export function useStrategist() {
   const [file, setFile] = useState<File | null>(null);
@@ -24,15 +24,14 @@ export function useStrategist() {
   }, []);
 
   async function handleSubmit() {
+    if (!file) {
+      setError("Please upload a PDF file before submitting.");
+      return;
+    }
     setLoading(true);
     setError(null);
     try {
-      const result = await submitStrategistRequest(
-        file,
-        prompt,
-        option,
-        parameterValue
-      );
+      const result = await submitAnalyzeRequest(file);
       setResponse(result);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Unknown error");

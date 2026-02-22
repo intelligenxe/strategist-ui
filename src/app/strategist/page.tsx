@@ -34,7 +34,7 @@ export default function StrategistPage() {
         <PromptInput value={prompt} onChange={setPrompt} />
         <OptionDropdown options={options} selected={option} onChange={setOption} />
         <ParameterInput value={parameterValue} onChange={setParameterValue} />
-        <SubmitButton onClick={handleSubmit} loading={loading} />
+        <SubmitButton onClick={handleSubmit} loading={loading} disabled={!file} />
       </div>
 
       <ResponseDisplay response={response} loading={loading} error={error} />
