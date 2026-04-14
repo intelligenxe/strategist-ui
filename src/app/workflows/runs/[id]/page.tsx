@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRunStatus } from "@/hooks/useWorkflows";
+import { deleteRun } from "@/services/api";
 import MarkdownContent from "@/components/MarkdownContent";
 
 function prettyName(name: string): string {
@@ -65,6 +66,9 @@ export default function RunDetailPage({
 
   const markdownResult = getMarkdownResult(data?.result ?? null);
 
+  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
+
   async function copyResultJson() {
     if (!data?.result) return;
     try {
@@ -74,14 +78,46 @@ export default function RunDetailPage({
     }
   }
 
+  async function handleDelete() {
+    if (!user || !Number.isFinite(runId)) return;
+    if (!window.confirm("Delete this run?")) return;
+    setDeleteError(null);
+    setDeleting(true);
+    try {
+      await deleteRun(runId, user.token);
+      router.push("/workflows");
+    } catch (err: unknown) {
+      setDeleteError(err instanceof Error ? err.message : "Failed to delete run");
+      setDeleting(false);
+    }
+  }
+
   return (
     <div>
-      <Link
-        href="/workflows"
-        className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors mb-4"
-      >
-        ← Back to workflows
-      </Link>
+      <div className="flex items-center justify-between mb-4">
+        <Link
+          href="/workflows"
+          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors"
+        >
+          ← Back to workflows
+        </Link>
+        {Number.isFinite(runId) && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={deleting}
+            className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors disabled:opacity-50"
+          >
+            {deleting ? "Deleting…" : "Delete run"}
+          </button>
+        )}
+      </div>
+
+      {deleteError && (
+        <div className="rounded-lg bg-red-50 p-3 border border-red-200 mb-4">
+          <p className="text-sm text-red-700">{deleteError}</p>
+        </div>
+      )}
 
       {!Number.isFinite(runId) ? (
         <div className="rounded-lg bg-red-50 p-4 border border-red-200">

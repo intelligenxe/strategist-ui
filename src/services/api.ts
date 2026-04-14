@@ -255,3 +255,15 @@ export async function getRunDetail(id: number, token: string): Promise<RunDetail
 
   return res.json();
 }
+
+export async function deleteRun(id: number, token: string): Promise<void> {
+  const res = await authFetch(
+    `/api/workflows/runs/${id}`,
+    { method: "DELETE" },
+    token
+  );
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new Error(data?.error || "Failed to delete run");
+  }
+}

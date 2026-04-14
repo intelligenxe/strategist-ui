@@ -31,3 +31,30 @@ export async function GET(
 
   return NextResponse.json(data);
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const authHeader = request.headers.get("Authorization");
+  if (!authHeader) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { id } = await params;
+
+  const res = await fetch(`${WORKFLOWS_API_URL}/runs/${id}/`, {
+    method: "DELETE",
+    headers: { Authorization: authHeader },
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    return NextResponse.json(
+      data || { error: "Failed to delete run" },
+      { status: res.status }
+    );
+  }
+
+  return new NextResponse(null, { status: 204 });
+}

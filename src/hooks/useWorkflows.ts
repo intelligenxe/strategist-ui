@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { WorkflowSummary, RunSummary, RunDetail } from "@/types";
-import { listWorkflows, listRuns, getRunDetail } from "@/services/api";
+import { listWorkflows, listRuns, getRunDetail, deleteRun as deleteRunApi } from "@/services/api";
 
 const POLL_INTERVAL_MS = 4000;
 const POLL_MAX_COUNT = 150;
@@ -40,6 +40,7 @@ export function useRunsList() {
   const [runs, setRuns] = useState<RunSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const refetch = useCallback(async () => {
     if (!user) return;
@@ -55,11 +56,25 @@ export function useRunsList() {
     }
   }, [user]);
 
+  const deleteRun = useCallback(
+    async (id: number) => {
+      if (!user) return;
+      setDeleteError(null);
+      try {
+        await deleteRunApi(id, user.token);
+        setRuns((prev) => prev.filter((r) => r.run_id !== id));
+      } catch (err: unknown) {
+        setDeleteError(err instanceof Error ? err.message : "Failed to delete run");
+      }
+    },
+    [user]
+  );
+
   useEffect(() => {
     refetch();
   }, [refetch]);
 
-  return { runs, loading, error, refetch };
+  return { runs, loading, error, refetch, deleteRun, deleteError };
 }
 
 export function useRunStatus(runId: number | null) {

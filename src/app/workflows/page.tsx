@@ -16,7 +16,7 @@ export default function WorkflowsPage() {
   }, [user, router]);
 
   const { workflows, loading: workflowsLoading, error: workflowsError } = useWorkflowsList();
-  const { runs, loading: runsLoading, refetch: refetchRuns } = useRunsList();
+  const { runs, loading: runsLoading, refetch: refetchRuns, deleteRun, deleteError: runsDeleteError } = useRunsList();
 
   return (
     <div>
@@ -48,7 +48,13 @@ export default function WorkflowsPage() {
         </div>
 
         <div className="lg:col-span-1">
-          <RunHistory runs={runs} loading={runsLoading} onRefresh={refetchRuns} />
+          <RunHistory
+            runs={runs}
+            loading={runsLoading}
+            onRefresh={refetchRuns}
+            onDelete={deleteRun}
+            deleteError={runsDeleteError}
+          />
         </div>
       </div>
     </div>
