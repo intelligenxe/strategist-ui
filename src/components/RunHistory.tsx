@@ -24,6 +24,12 @@ function prettyName(name: string): string {
   return name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+function rowLabel(run: RunSummary): string {
+  const ticker = run.inputs?.ticker;
+  if (typeof ticker === "string" && ticker.trim()) return ticker.toUpperCase();
+  return prettyName(run.workflow);
+}
+
 function statusColor(status: string): string {
   switch (status) {
     case "completed":
@@ -83,7 +89,7 @@ export default function RunHistory({ runs, loading, onRefresh, onDelete, deleteE
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-sm font-medium text-gray-700 truncate">
-                    {prettyName(run.workflow)}
+                    {rowLabel(run)}
                   </span>
                   <span
                     className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-medium ${statusColor(run.status)}`}

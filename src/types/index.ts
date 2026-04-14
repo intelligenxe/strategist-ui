@@ -73,6 +73,7 @@ export interface RunSummary {
   run_id: number;
   workflow: string;
   status: WorkflowStatus;
+  inputs?: Record<string, unknown>;
   created_at: string;
   completed_at: string | null;
 }
