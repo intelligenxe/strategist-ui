@@ -25,8 +25,14 @@ function prettyName(name: string): string {
 }
 
 function rowLabel(run: RunSummary): string {
+  const parts: string[] = [];
   const ticker = run.inputs?.ticker;
-  if (typeof ticker === "string" && ticker.trim()) return ticker.toUpperCase();
+  if (typeof ticker === "string" && ticker.trim()) parts.push(ticker.toUpperCase());
+  const companyName = run.inputs?.company_name;
+  if (typeof companyName === "string" && companyName.trim()) parts.push(companyName.trim());
+  const industry = run.inputs?.industry;
+  if (typeof industry === "string" && industry.trim()) parts.push(industry.trim());
+  if (parts.length > 0) return parts.join(" — ");
   return prettyName(run.workflow);
 }
 
@@ -87,8 +93,8 @@ export default function RunHistory({ runs, loading, onRefresh, onDelete, deleteE
                 href={`/workflows/runs/${run.run_id}`}
                 className="block rounded bg-white px-3 py-2.5 pr-16 border border-gray-100 hover:border-gray-300 transition-colors"
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-sm font-medium text-gray-700 truncate">
+                <div className="flex items-start justify-between gap-2">
+                  <span className="text-sm font-medium text-gray-700 break-words">
                     {rowLabel(run)}
                   </span>
                   <span
