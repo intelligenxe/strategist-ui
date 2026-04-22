@@ -24,16 +24,16 @@ function prettyName(name: string): string {
   return name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function rowLabel(run: RunSummary): string {
-  const parts: string[] = [];
+function rowLines(run: RunSummary): string[] {
+  const lines: string[] = [];
   const ticker = run.inputs?.ticker;
-  if (typeof ticker === "string" && ticker.trim()) parts.push(ticker.toUpperCase());
+  if (typeof ticker === "string" && ticker.trim()) lines.push(ticker.toUpperCase());
   const companyName = run.inputs?.company_name;
-  if (typeof companyName === "string" && companyName.trim()) parts.push(companyName.trim());
+  if (typeof companyName === "string" && companyName.trim()) lines.push(companyName.trim());
   const industry = run.inputs?.industry;
-  if (typeof industry === "string" && industry.trim()) parts.push(industry.trim());
-  if (parts.length > 0) return parts.join(" — ");
-  return prettyName(run.workflow);
+  if (typeof industry === "string" && industry.trim()) lines.push(industry.trim());
+  if (lines.length > 0) return lines;
+  return [prettyName(run.workflow)];
 }
 
 function statusColor(status: string): string {
@@ -93,12 +93,14 @@ export default function RunHistory({ runs, loading, onRefresh, onDelete, deleteE
                 href={`/workflows/runs/${run.run_id}`}
                 className="block rounded bg-white px-3 py-2.5 pr-16 border border-gray-100 hover:border-gray-300 transition-colors"
               >
-                <div className="flex items-start justify-between gap-2">
-                  <span className="text-sm font-medium text-gray-700 break-words">
-                    {rowLabel(run)}
-                  </span>
+                <div className="text-sm font-medium text-gray-700 break-words">
+                  {rowLines(run).map((line, idx) => (
+                    <div key={idx}>{line}</div>
+                  ))}
+                </div>
+                <div className="mt-1">
                   <span
-                    className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-medium ${statusColor(run.status)}`}
+                    className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${statusColor(run.status)}`}
                   >
                     {run.status}
                   </span>
