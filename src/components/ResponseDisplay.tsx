@@ -13,7 +13,7 @@ export default function ResponseDisplay({
 }: ResponseDisplayProps) {
   if (loading) {
     return (
-      <div className="mt-8 rounded-lg bg-gray-50 p-6 border border-gray-200">
+      <div className="mt-6">
         <div className="animate-pulse space-y-3">
           <div className="h-4 bg-gray-200 rounded w-3/4" />
           <div className="h-4 bg-gray-200 rounded w-full" />
@@ -25,7 +25,7 @@ export default function ResponseDisplay({
 
   if (error) {
     return (
-      <div className="mt-8 rounded-lg bg-red-50 p-6 border border-red-200">
+      <div className="mt-6 rounded-lg bg-red-50 p-3 border border-red-200">
         <p className="text-sm text-red-700">{error}</p>
       </div>
     );
@@ -34,7 +34,7 @@ export default function ResponseDisplay({
   if (!response) return null;
 
   return (
-    <div className="mt-8 rounded-lg bg-gray-50 p-6 border border-gray-200">
+    <div className="mt-6">
       <h2 className="text-lg font-semibold text-gray-900 mb-3">Response</h2>
       <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
         {response.answer}

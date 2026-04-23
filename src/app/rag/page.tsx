@@ -60,7 +60,7 @@ export default function RagPage() {
       <h1 className="text-3xl font-bold text-gray-900 mb-6">RAG</h1>
 
       {/* Document Management */}
-      <section className="mb-8">
+      <section className="mb-8 rounded-lg bg-gray-50 p-6 border border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Add Knowledge</h2>
 
         {/* Tabs */}
@@ -147,7 +147,7 @@ export default function RagPage() {
       </section>
 
       {/* Query */}
-      <section>
+      <section className="rounded-lg bg-gray-50 p-6 border border-gray-200">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Query Knowledge Base</h2>
         <div className="space-y-4">
           <PromptInput
