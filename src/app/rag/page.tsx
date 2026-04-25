@@ -50,7 +50,7 @@ export default function RagPage() {
   const [dataSource, setDataSource] = useState<"upload" | "urls">("upload");
 
   const searchParams = useSearchParams();
-  const returnWorkflow = searchParams.get("return") ?? "corporate_strategy";
+  const returnWorkflow = searchParams.get("return") ?? "swot";
   const backHref = `/workflows/${returnWorkflow}`;
 
   return (

@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRunStatus } from "@/hooks/useWorkflows";
 import { deleteRun } from "@/services/api";
 import MarkdownContent from "@/components/MarkdownContent";
+import { workflowDisplayName } from "@/lib/workflows";
 
 function prettyName(name: string): string {
   return name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
@@ -137,7 +138,7 @@ export default function RunDetailPage({
         <>
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-3xl font-bold text-gray-900">
-              {prettyName(data.workflow)}
+              {workflowDisplayName(data.workflow)}
             </h1>
             <span
               className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${

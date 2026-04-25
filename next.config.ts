@@ -1,7 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/workflows/corporate_strategy",
+        destination: "/workflows/swot",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

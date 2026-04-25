@@ -2,20 +2,17 @@
 
 import Link from "next/link";
 import { WorkflowSummary } from "@/types";
+import { workflowDisplayName } from "@/lib/workflows";
 
 interface WorkflowCardProps {
   workflow: WorkflowSummary;
-}
-
-function prettyName(name: string): string {
-  return name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 export default function WorkflowCard({ workflow }: WorkflowCardProps) {
   return (
     <div className="flex flex-col rounded-lg border border-gray-200 bg-white p-5 hover:border-gray-300 transition-colors">
       <h3 className="text-base font-semibold text-gray-900 mb-2">
-        {prettyName(workflow.name)}
+        {workflowDisplayName(workflow.name)}
       </h3>
       <p className="text-sm text-gray-600 flex-1 mb-4">{workflow.description}</p>
       <div className="flex items-center justify-between">

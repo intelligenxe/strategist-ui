@@ -12,7 +12,7 @@ import SubmitButton from "./SubmitButton";
 const ARRAY_FIELDS = new Set(["focus_areas"]);
 
 const WORKFLOW_SCHEMAS: Record<string, { required: string[]; optional: string[] }> = {
-  corporate_strategy: {
+  swot: {
     required: ["company_name", "ticker", "industry"],
     optional: ["focus_areas"],
   },
@@ -22,7 +22,7 @@ const WORKFLOW_SCHEMAS: Record<string, { required: string[]; optional: string[] 
   },
 };
 
-const RAG_ENABLED_WORKFLOWS = new Set(["corporate_strategy", "five_forces"]);
+const RAG_ENABLED_WORKFLOWS = new Set(["swot", "five_forces"]);
 
 interface WorkflowFormProps {
   workflow: WorkflowSummary;

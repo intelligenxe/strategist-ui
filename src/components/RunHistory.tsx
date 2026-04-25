@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { RunSummary } from "@/types";
+import { workflowDisplayName } from "@/lib/workflows";
 
 interface RunHistoryProps {
   runs: RunSummary[];
@@ -20,10 +21,6 @@ function formatDate(dateStr: string): string {
   });
 }
 
-function prettyName(name: string): string {
-  return name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
 function rowLines(run: RunSummary): string[] {
   const lines: string[] = [];
   const ticker = run.inputs?.ticker;
@@ -33,7 +30,7 @@ function rowLines(run: RunSummary): string[] {
   const industry = run.inputs?.industry;
   if (typeof industry === "string" && industry.trim()) lines.push(industry.trim());
   if (lines.length > 0) return lines;
-  return [prettyName(run.workflow)];
+  return [workflowDisplayName(run.workflow)];
 }
 
 function statusColor(status: string): string {

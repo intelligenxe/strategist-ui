@@ -7,10 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useWorkflowsList, useRunsList } from "@/hooks/useWorkflows";
 import WorkflowForm from "@/components/WorkflowForm";
 import RunHistory from "@/components/RunHistory";
-
-function prettyName(name: string): string {
-  return name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
+import { workflowDisplayName } from "@/lib/workflows";
 
 export default function WorkflowRunnerPage({
   params,
@@ -57,7 +54,7 @@ export default function WorkflowRunnerPage({
       ) : (
         <>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {prettyName(workflow.name)}
+            {workflowDisplayName(workflow.name)}
           </h1>
           <p className="text-gray-600 mb-8">{workflow.description}</p>
 
