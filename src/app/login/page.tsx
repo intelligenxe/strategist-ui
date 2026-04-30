@@ -44,7 +44,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center">
       <div className="w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-gray-900 text-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-900 text-center mb-6">
           Welcome to Strategist
         </h1>
 

@@ -12,10 +12,10 @@ export default function Home() {
     <div>
       <div className="flex flex-col items-center justify-center text-center mb-12">
         <img src="/logo.svg" alt="Strategist" className="h-36 w-36 mb-6" />
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
           Welcome to Strategist
         </h1>
-        <p className="text-lg text-gray-600 max-w-xl">
+        <p className="text-sm text-gray-700 max-w-xl">
           Perform corporate strategy analyses on publicly traded companies worldwide using AI-powered frameworks
         </p>
       </div>

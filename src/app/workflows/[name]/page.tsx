@@ -56,7 +56,7 @@ export default function WorkflowRunnerPage({
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             {workflowDisplayName(workflow.name)}
           </h1>
-          <p className="text-gray-600 mb-8">{workflow.description}</p>
+          <p className="text-sm text-gray-700 mb-8">{workflow.description}</p>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2">
